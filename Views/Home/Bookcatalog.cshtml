@@ -1,0 +1,189 @@
+﻿@model EbookCatalog.Models.BookCatalog
+
+@{
+    ViewData["Title"] = "Bookcatalog";
+    var books = ViewBag.books != null && ViewBag.books.Count > 0 ? ViewBag.books[0] : null; 
+    var writers = ViewBag.writers != null && ViewBag.writers.Count > 0 ? ViewBag.writers[0] : null;
+}
+<div class="col-md-4">
+<h1 class="bg-info">Book Catalog </h1>
+</div>
+
+
+<hr />
+
+<div>
+    <h3>All the fields with <span style="color:red">*</span> are required </h3>
+</div>
+
+<div class="card  bg-light ">
+    <div class="card-body">
+
+ 
+<div class="row mt-4 d-flex">
+    <div class="col-md-10">
+        <form asp-action="Bookcatalog" enctype="multipart/form-data"  >
+            
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    
+                    <div class="form-group">
+                        <div class="row  my-1">
+                            <div class="col-md-3">
+                                <label asp-for="Name" class="control-label">Book Name<span style="color:red">*</span></label>
+                            </div>
+                            <div class="col-md mx-0">
+                                <input asp-for="Name" class="form-control" placeholder="Enter Book Name" data-val="true" data-val-required="Please Enter The Book Name" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="row my-1">
+                            <div class="col-md-3">
+                                <label asp-for="Description" class="control-label">Description<span style="color:red">*</span></label>
+                            </div>
+                            <div class="col">
+                                <input asp-for="Description" class="form-control" placeholder="Book Description" data-val="true" data-val-required="Please Write Book Description" />
+                                <span asp-validation-for="Description" class="text-danger"></span>
+                            </div>
+                        </div>
+                     
+                    </div>
+                </div>
+            </div>
+
+           <div class="row my-1">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label asp-for="Price" class="control-label">Price<span style="color:red">*</span></label>
+                            </div>
+                            <div class="col">
+                                <input asp-for="Price" type="number" class="form-control" placeholder=" Price INR " data-val="true" data-val-required="Please Enter The Book Price in Rupees" />
+                                <span asp-validation-for="Price" class="text-danger"></span>
+                            </div>
+                        </div>
+                      
+                       
+                       
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div>
+                        <div class="row my-1">
+                            <div class="col-md-3">
+                                <label class="control-label">Upload Book<span style="color:red">*</span> </label>
+                            </div>
+                            <div class="col">
+                                        <input type="file" asp-for="formFile" class="form-control" data-val="true" data-val-required="Upload Image" />
+                                        <span asp-validation-for="formFile" class="text-danger"></span>
+                            </div>
+                        </div>
+                      
+                       
+                        <span class="text-danger"> </span>
+
+                    </div>
+                </div>
+            </div> 
+           
+            
+           @*  <div class="form-group">
+                <label asp-for="PictureFileName" class="control-label"></label>
+                <input asp-for="PictureFileName" class="form-control" />
+                <span asp-validation-for="PictureFileName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pictureuri" class="control-label"></label>
+                <input asp-for="Pictureuri" class="form-control" />
+                <span asp-validation-for="Pictureuri" class="text-danger"></span>
+            </div> *@
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="row my-1">
+                            <div class="col-md-3">
+                                <label asp-for="BookPublicationId" class="control-label">Book Publication<span style="color:red">*</span></label>
+                            </div>
+                            <div class="col">
+                                <select asp-for="BookPublicationId" class="form-control" data-val="true" data-val-required=" Select a Book " >
+                                    <option value="">-- Select --</option>
+                                    @foreach (var book in ViewBag.books)
+                                    {
+                                        <option value="@book.Id">@book.PublicationName</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="BookPublicationId" class="text-danger"></span>
+                            </div>
+                        </div>
+                       
+                       
+                    </div>
+
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <div class="row  my-1">
+                            <div class="col-md-3">
+                                <label asp-for="BookWriterId" class="control-label"> Book Writer <span style="color:red">*</span></label>
+                            </div>
+                            <div class="col">
+                                <select asp-for="BookWriterId" class="form-control" data-val="true" data-val-required=" Select  Book writer Name">
+                                    <option value="">-- Select --</option>
+                                    @foreach (var writer in ViewBag.writers)
+                                    {
+                                        <option value="@writer.Id">@writer.WriterName</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="BookWriterId" class="text-danger"></span>
+                            </div>
+                        </div>
+                       
+                       
+                    </div>
+                </div>
+            </div>
+          
+           @*  <div class="form-group">
+                <label asp-for="CreatedByUserId" class="control-label"></label>
+                <input asp-for="CreatedByUserId" class="form-control" />
+                <span asp-validation-for="CreatedByUserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModifiedDateTime" class="control-label"></label>
+                <input asp-for="ModifiedDateTime" class="form-control" />
+                <span asp-validation-for="ModifiedDateTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ModifiedByUserId" class="control-label"></label>
+                <input asp-for="ModifiedByUserId" class="form-control" />
+                <span asp-validation-for="ModifiedByUserId" class="text-danger"></span>
+            </div> *@
+
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary my-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

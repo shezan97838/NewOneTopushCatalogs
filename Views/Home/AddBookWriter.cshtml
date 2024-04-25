@@ -1,0 +1,94 @@
+﻿@model EbookCatalog.Models.BookWriter
+
+@{
+    ViewData["Title"] = "AddBookWriter";
+    var writerDetails = ViewBag.WriterDetails != null && ViewBag.WriterDetails.Count > 0 ? ViewBag.WriterDetails[0] : null;
+}
+
+
+   
+
+
+<h4>Add New Book Writer Here</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddBookWriter">
+
+            <input type="hidden" asp-for="Id" value="@writerDetails?.Id" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="WriterName" class="control-label"></label>
+                <input asp-for="WriterName" class="form-control" value="@writerDetails?.WriterName" />
+                <span asp-validation-for="WriterName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary my-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">S.N</th>
+                        <th scope="col">Writer Name</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        var i = 1;
+                    }
+                    @foreach (var writer in ViewBag.BookWriter)
+                    {
+                        @if (@writer.WriterName != null)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>
+                                    @writer.WriterName
+
+
+
+                                </td>
+                                <td>
+                                    <a href="/Home/DeleteWriter/?id=@writer.Id">
+                                        <span>
+                                            <button class="btn btn-danger mx-1">Delete</button>
+                                        </span>
+                                    </a>
+
+
+                                    <a href="/Home/AddBookWriter/?id=@writer.Id">
+                                        <span>
+                                            <button class="btn btn-success mx-1">Edit</button>
+                                        </span>
+                                    </a>
+                                  
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
